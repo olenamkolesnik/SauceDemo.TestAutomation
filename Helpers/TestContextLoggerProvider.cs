@@ -25,10 +25,25 @@ namespace SauceDemo.TestAutomation.Helpers
         public bool IsEnabled(LogLevel logLevel) => true;
 
         public void Log<TState>(LogLevel logLevel, EventId eventId,
-            TState state, Exception exception, Func<TState, Exception?, string> formatter)
+    TState state, Exception exception, Func<TState, Exception?, string> formatter)
         {
-            var message = $"[{logLevel}] {_category}: {formatter(state, exception)}";
-            NUnit.Framework.TestContext.Progress.WriteLine(message);
+            var testName = TestContext.CurrentContext.Test.Name ?? "UnknownTest";
+            var message = formatter(state, exception);
+
+            var formattedMessage = $"[{logLevel}] {_category} [{testName}]: {message}";
+
+            switch (logLevel)
+            {
+                case LogLevel.Error:
+                    Console.WriteLine($"::error::{formattedMessage}");
+                    break;
+                case LogLevel.Warning:
+                    Console.WriteLine($"::warning::{formattedMessage}");
+                    break;
+                case LogLevel.Information:
+                    Console.WriteLine($"::notice::{formattedMessage}");
+                    break;
+            }
         }
     }
 
