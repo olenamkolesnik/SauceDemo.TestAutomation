@@ -27,10 +27,7 @@ jobs:
       run: pwsh bin/Debug/net9.0/playwright.ps1 install
 
     - name: Run your tests
-      run: |
-          dotnet test \
-            --logger "console;verbosity=normal" \
-            -- NUnit.Allure.Configuration.ResultsDirectory=allure-results
+      run: dotnet test --logger "console;verbosity=normal"  -- NUnit.Allure.Configuration.ResultsDirectory=allure-results
 
     - name: List Allure output directory
       run: ls -R allure-results || echo "No results found"
