@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Allure.Commons;
+using Microsoft.Extensions.Logging;
 using Microsoft.Playwright;
 using SauceDemo.TestAutomation.Config;
 using SauceDemo.TestAutomation.Helpers;
@@ -67,6 +68,29 @@ namespace SauceDemo.TestAutomation.Hooks
         [TearDown]
         public async Task TearDown()
         {
+            var outcome = TestContext.CurrentContext.Result.Outcome.Status;
+
+            if (outcome == NUnit.Framework.Interfaces.TestStatus.Failed)
+            {
+                var testName = TestContext.CurrentContext.Test.Name;
+                var screenshotPath = Path.Combine("TestResults", $"{testName}.png");
+
+                // Ensure directory exists
+                Directory.CreateDirectory("TestResults");
+
+                await _testContext.Page.ScreenshotAsync(new PageScreenshotOptions
+                {
+                    Path = screenshotPath,
+                    FullPage = true
+                });
+
+                Logger.LogInformation($"Screenshot saved: {screenshotPath}");
+
+                // Attach screenshot to Allure report
+                var lifecycle = AllureLifecycle.Instance;
+                lifecycle.AddAttachment(testName, "image/png", screenshotPath);
+            }
+
             await _testContext.Page.CloseAsync();
             await _testContext.Context.CloseAsync();
             await _browser.CloseAsync();

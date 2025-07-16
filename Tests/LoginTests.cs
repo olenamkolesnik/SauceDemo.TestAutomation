@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Allure.NUnit.Attributes;
+using Allure.NUnit;
+using Microsoft.Extensions.Logging;
 using Microsoft.Playwright;
 using SauceDemo.TestAutomation.Config;
 using SauceDemo.TestAutomation.Hooks;
@@ -6,6 +8,8 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace SauceDemo.TestAutomation.Tests
 {
+    [AllureNUnit]
+    [AllureSuite("Login")]
     [Category("Login")]
     public class LoginTests : PlaywrightTestBase
     {

@@ -1,9 +1,13 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Allure.NUnit.Attributes;
+using Allure.NUnit;
+using Microsoft.Extensions.Logging;
 using SauceDemo.TestAutomation.Config;
 using SauceDemo.TestAutomation.Hooks;
 
 namespace SauceDemo.TestAutomation.Tests
 {
+    [AllureNUnit]
+    [AllureSuite("Products")]
     [Category("Products")]
     public class ProductsTests : PlaywrightTestBase
     {

@@ -32,6 +32,8 @@ namespace SauceDemo.TestAutomation.Helpers
 
             var formattedMessage = $"[{logLevel}] {_category} [{testName}]: {message}";
 
+            TestContext.Progress.WriteLine(formattedMessage);
+            /*
             switch (logLevel)
             {
                 case LogLevel.Error:
@@ -44,6 +46,7 @@ namespace SauceDemo.TestAutomation.Helpers
                     Console.WriteLine($"::notice::{formattedMessage}");
                     break;
             }
+            */
         }
     }
 
