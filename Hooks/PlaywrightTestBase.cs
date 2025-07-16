@@ -1,5 +1,7 @@
-﻿using Microsoft.Playwright;
+﻿using Microsoft.Extensions.Logging;
+using Microsoft.Playwright;
 using SauceDemo.TestAutomation.Config;
+using SauceDemo.TestAutomation.Helpers;
 using SauceDemo.TestAutomation.Pages;
 
 namespace SauceDemo.TestAutomation.Hooks
@@ -14,6 +16,21 @@ namespace SauceDemo.TestAutomation.Hooks
 
         protected LoginPage _loginPage;
         protected ProductsPage _productsPage;
+
+        protected ILogger Logger { get; private set; }
+
+        [OneTimeSetUp]
+        public void GlobalSetup()
+        {
+            var loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder
+                    .SetMinimumLevel(LogLevel.Information)
+                    .AddProvider(new TestContextLoggerProvider()); // 👈 Use custom provider
+            });
+
+            Logger = loggerFactory.CreateLogger("PlaywrightTests");
+        }
 
         [SetUp]
         public async Task SetUp()
