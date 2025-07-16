@@ -28,10 +28,12 @@ jobs:
 
     - name: Run your tests
       run: |
-          dotnet test --no-build \
+          dotnet test \
             --logger "console;verbosity=normal" \
-            --logger "trx" \
             -- NUnit.Allure.Configuration.ResultsDirectory=allure-results
+
+    - name: List Allure output directory
+      run: ls -R allure-results || echo "No results found"
 
     - name: Upload Allure results as artifact
       uses: actions/upload-artifact@v4
