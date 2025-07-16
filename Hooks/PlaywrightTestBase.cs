@@ -26,7 +26,8 @@ namespace SauceDemo.TestAutomation.Hooks
             {
                 builder
                     .SetMinimumLevel(LogLevel.Information)
-                    .AddProvider(new TestContextLoggerProvider()); // 👈 Use custom provider
+                    .AddConsole()
+                    .AddProvider(new TestContextLoggerProvider());
             });
 
             Logger = loggerFactory.CreateLogger("PlaywrightTests");
