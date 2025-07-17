@@ -32,9 +32,6 @@ jobs:
             --logger "console;verbosity=normal" \
             -- NUnit.Allure.Configuration.ResultsDirectory=bin/Debug/net9.0/allure-results
 
-    - name: List Allure output directory
-      run: ls -R bin/Debug/net9.0/allure-results || echo "No results found"
-
     - name: Copy Allure results to a stable path
       run: |
         mkdir -p ./temp-allure-results
@@ -50,11 +47,11 @@ jobs:
       run: |
         allure generate temp-allure-results --clean -o allure-report
 
-    - name: Upload Allure results as artifact
+    - name: Upload Allure HTML report
       uses: actions/upload-artifact@v4
       with:
-        name: allure-results
-        path: temp-allure-results
+        name: allure-report
+        path: allure-report
 
 
  
