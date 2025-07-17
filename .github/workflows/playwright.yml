@@ -30,28 +30,23 @@ jobs:
       run: |
           dotnet test --no-build \
             --logger "console;verbosity=normal" \
-            -- NUnit.Allure.Configuration.ResultsDirectory=bin/Debug/net9.0/allure-results
-
-    - name: Copy Allure results to a stable path
-      run: |
-        mkdir -p ./temp-allure-results
-        cp -r bin/Debug/net9.0/allure-results/* ./temp-allure-results
+            -- NUnit.Allure.Configuration.ResultsDirectory=bin/Debug/net9.0/allure-results    
 
     - name: Upload Allure results as artifact
       uses: actions/upload-artifact@v4
       with:
         name: allure-results
-        path: ./temp-allure-results/allure-results
+        path: bin/Debug/net9.0/allure-results
 
     - name: Generate Allure HTML Report
       run: |
-        allure generate temp-allure-results --clean -o ./temp-allure-results/allure-report
+        allure generate bin/Debug/net9.0/allure-results --clean -o bin/Debug/net9.0/allure-report
 
     - name: Upload Allure HTML report
       uses: actions/upload-artifact@v4
       with:
         name: allure-report
-        path: ./temp-allure-results/allure-report
+        path: bin/Debug/net9.0/allure-report
 
 
  
