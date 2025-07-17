@@ -6,8 +6,6 @@ using SauceDemo.TestAutomation.Hooks;
 
 namespace SauceDemo.TestAutomation.Tests
 {
-    [AllureNUnit]
-    [AllureSuite("Products")]
     [Category("Products")]
     public class ProductsTests : PlaywrightTestBase
     {
@@ -24,6 +22,7 @@ namespace SauceDemo.TestAutomation.Tests
             await _productsPage.InventoryList.WaitForAsync();
         }
 
+        [AllureSuite("Products")]
         [Test]
         public async Task ProductsShouldBeSortedAlphabeticallyDescendant()
         {

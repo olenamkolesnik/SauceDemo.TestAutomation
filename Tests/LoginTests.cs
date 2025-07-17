@@ -8,11 +8,10 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace SauceDemo.TestAutomation.Tests
 {
-    [AllureNUnit]
-    [AllureSuite("Login")]
     [Category("Login")]
     public class LoginTests : PlaywrightTestBase
     {
+        [AllureSuite("Login")]
         [Test]
         public async Task SuccessfulLogin_ShouldDisplayProductsPage()
         {
@@ -30,6 +29,7 @@ namespace SauceDemo.TestAutomation.Tests
             Assert.That(_productsPage.CurrentUrl, Is.EqualTo(expectedUrl), "User is not navigated to the products page after login.");
         }
 
+        [AllureSuite("Login")]
         [Test]
         public async Task UnsuccessfulLogin_ShouldShowErrorMessage()
         {

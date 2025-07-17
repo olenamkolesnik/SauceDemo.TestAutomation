@@ -1,4 +1,5 @@
 ﻿using Allure.Commons;
+using Allure.NUnit;
 using Microsoft.Extensions.Logging;
 using Microsoft.Playwright;
 using SauceDemo.TestAutomation.Config;
@@ -7,6 +8,7 @@ using SauceDemo.TestAutomation.Pages;
 
 namespace SauceDemo.TestAutomation.Hooks
 {
+    [AllureNUnit]
     [Parallelizable(ParallelScope.Self)]
     [TestFixture]
     public class PlaywrightTestBase
