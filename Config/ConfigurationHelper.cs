@@ -28,8 +28,8 @@ public static class ConfigurationHelper
         public static string Browser => GetRequiredConfig("browser");
         public static bool Headless => Convert.ToBoolean(GetRequiredConfig("headless"));
         public static int Timeout => Convert.ToInt32(GetRequiredConfig("timeout"));
-        public static string UserName => GetEnvironmentVariable("USER_NAME");
-        public static string Password => GetEnvironmentVariable("USER_PASSWORD");
+        public static string UserName => GetEnvironmentVariable("USERNAME");
+        public static string Password => GetEnvironmentVariable("USERPASSWORD");
 
         private static string GetRequiredConfig(string key)
         {

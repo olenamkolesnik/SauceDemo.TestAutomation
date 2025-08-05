@@ -85,7 +85,7 @@ namespace SauceDemo.TestAutomation.Hooks
                     FullPage = true
                 });
 
-                Logger.LogInformation("Screenshot saved at path: {ScreenshotPath}", screenshotPath);
+                Logger.LogInformation($"Screenshot saved at path: {screenshotPath}");
 
                 // Attach screenshot to Allure report  
                 var lifecycle = AllureLifecycle.Instance;

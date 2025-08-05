@@ -20,20 +20,19 @@ namespace SauceDemo.TestAutomation.Helpers
         }
     }
 
-    public class TestContextLogger : ILogger
+    public class TestContextLogger(string category) : ILogger
     {
-        private readonly string _category;
+        private readonly string _category = category;
 
-        public TestContextLogger(string category)
+        IDisposable ILogger.BeginScope<TState>(TState state)
         {
-            _category = category;
+            return NullScope.Instance;
         }
 
-        public IDisposable BeginScope<TState>(TState state) => NullScope.Instance;
         public bool IsEnabled(LogLevel logLevel) => true;
 
         public void Log<TState>(LogLevel logLevel, EventId eventId,
-            TState state, Exception exception, Func<TState, Exception?, string> formatter)
+            TState state, Exception? exception, Func<TState, Exception?, string> formatter)
         {
             var testName = TestContext.CurrentContext.Test?.Name ?? "UnknownTest";
             var message = formatter(state, exception);
