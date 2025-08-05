@@ -1,29 +1,53 @@
-using Microsoft.Extensions.Configuration;
+using System.Text.Json;
 
 namespace SauceDemo.TestAutomation.Config
 {
-    public static class ConfigurationHelper
+public static class ConfigurationHelper
     {
-        private static readonly IConfigurationRoot _configuration;
+        private static readonly Dictionary<string, object> _config;
 
         static ConfigurationHelper()
         {
-            _configuration = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json")
-                .Build();
+            DotNetEnv.Env.Load();
+
+            var env = Environment.GetEnvironmentVariable("TEST_ENV") ?? "qa";
+            var json = File.ReadAllText("appsettings.json");
+
+            var fullConfig = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, object>>>(json);
+            if (fullConfig != null && fullConfig.TryGetValue(env, out var envConfig))
+            {
+                _config = envConfig;
+            }
+            else
+            {
+                throw new InvalidOperationException("Configuration for the specified environment is missing.");
+            }
         }
 
-        public static string BaseUrl => GetRequiredConfig("BaseUrl");
-        public static string Browser => GetRequiredConfig("Browser"); 
-        public static bool Headless => bool.Parse(GetRequiredConfig("Headless"));
-        public static int Timeout => int.Parse(GetRequiredConfig("Timeout"));
-        public static string UserName => GetRequiredConfig("UserName");
-        public static string Password => GetRequiredConfig("Password");
+        public static string BaseUrl => GetRequiredConfig("baseUrl");
+        public static string Browser => GetRequiredConfig("browser");
+        public static bool Headless => Convert.ToBoolean(GetRequiredConfig("headless"));
+        public static int Timeout => Convert.ToInt32(GetRequiredConfig("timeout"));
+        public static string UserName => GetEnvironmentVariable("USER_NAME");
+        public static string Password => GetEnvironmentVariable("USER_PASSWORD");
 
         private static string GetRequiredConfig(string key)
         {
-            var value = _configuration[key];
-            return value is null ? throw new InvalidOperationException($"Missing required configuration: {key}") : value;
+            if (_config.TryGetValue(key, out var value) && value != null)
+            {
+                return value.ToString() ?? throw new InvalidOperationException($"Configuration value for key '{key}' is null.");
+            }
+            throw new InvalidOperationException($"Configuration key '{key}' is missing or has no value.");
+        }
+
+        private static string GetEnvironmentVariable(string key)
+        {
+            var value = Environment.GetEnvironmentVariable(key);
+            if (string.IsNullOrEmpty(value))
+            {
+                throw new InvalidOperationException($"Environment variable '{key}' is not set.");
+            }
+            return value;
         }
     }
 }

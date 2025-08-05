@@ -16,7 +16,6 @@ namespace SauceDemo.TestAutomation.Hooks
         protected Context.TestContext _testContext;
         protected IPlaywright _playwright;
         protected IBrowser _browser;
-
         protected LoginPage _loginPage;
         protected ProductsPage _productsPage;
 
@@ -77,7 +76,7 @@ namespace SauceDemo.TestAutomation.Hooks
                 var testName = TestContext.CurrentContext.Test.Name;
                 var screenshotPath = Path.Combine("TestResults", $"{testName}.png");
 
-                // Ensure directory exists
+                // Ensure directory exists  
                 Directory.CreateDirectory("TestResults");
 
                 await _testContext.Page.ScreenshotAsync(new PageScreenshotOptions
@@ -86,9 +85,9 @@ namespace SauceDemo.TestAutomation.Hooks
                     FullPage = true
                 });
 
-                Logger.LogInformation($"Screenshot saved: {screenshotPath}");
+                Logger.LogInformation("Screenshot saved at path: {ScreenshotPath}", screenshotPath);
 
-                // Attach screenshot to Allure report
+                // Attach screenshot to Allure report  
                 var lifecycle = AllureLifecycle.Instance;
                 lifecycle.AddAttachment(testName, "image/png", screenshotPath);
             }

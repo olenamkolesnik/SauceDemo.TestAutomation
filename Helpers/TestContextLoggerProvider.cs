@@ -9,7 +9,15 @@ namespace SauceDemo.TestAutomation.Helpers
             return new TestContextLogger(categoryName);
         }
 
-        public void Dispose() { }
+        public void Dispose()
+        {
+            GC.SuppressFinalize(this);
+        }
+
+        ~TestContextLoggerProvider()
+        {
+            Dispose();
+        }
     }
 
     public class TestContextLogger : ILogger
@@ -21,33 +29,39 @@ namespace SauceDemo.TestAutomation.Helpers
             _category = category;
         }
 
-        public IDisposable BeginScope<TState>(TState state) => null!;
+        public IDisposable BeginScope<TState>(TState state) => NullScope.Instance;
         public bool IsEnabled(LogLevel logLevel) => true;
 
         public void Log<TState>(LogLevel logLevel, EventId eventId,
-    TState state, Exception exception, Func<TState, Exception?, string> formatter)
+            TState state, Exception exception, Func<TState, Exception?, string> formatter)
         {
-            var testName = TestContext.CurrentContext.Test.Name ?? "UnknownTest";
+            var testName = TestContext.CurrentContext.Test?.Name ?? "UnknownTest";
             var message = formatter(state, exception);
-
             var formattedMessage = $"[{logLevel}] {_category} [{testName}]: {message}";
 
             TestContext.Progress.WriteLine(formattedMessage);
-            /*
-            switch (logLevel)
+
+            if (Environment.GetEnvironmentVariable("GITHUB_ACTIONS") == "true")
             {
-                case LogLevel.Error:
-                    Console.WriteLine($"::error::{formattedMessage}");
-                    break;
-                case LogLevel.Warning:
-                    Console.WriteLine($"::warning::{formattedMessage}");
-                    break;
-                case LogLevel.Information:
-                    Console.WriteLine($"::notice::{formattedMessage}");
-                    break;
+                switch (logLevel)
+                {
+                    case LogLevel.Error:
+                        Console.WriteLine($"::error::{formattedMessage}");
+                        break;
+                    case LogLevel.Warning:
+                        Console.WriteLine($"::warning::{formattedMessage}");
+                        break;
+                    case LogLevel.Information:
+                        Console.WriteLine($"::notice::{formattedMessage}");
+                        break;
+                }
             }
-            */
+        }
+
+        private class NullScope : IDisposable
+        {
+            public static NullScope Instance { get; } = new NullScope();
+            public void Dispose() { }
         }
     }
-
 }

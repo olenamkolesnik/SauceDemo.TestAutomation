@@ -43,5 +43,24 @@ namespace SauceDemo.TestAutomation.Tests
             var errorMessage = "Epic sadface: Username and password do not match any user in this service";
             await Assertions.Expect(_loginPage.ErrorMessage).ToContainTextAsync(errorMessage);
         }
+
+        [AllureSuite("Login")]
+        [Test]
+        [Ignore("This test is currently ignored as it was created to demonstrate snapshot on fail functionality.")]
+        public async Task UnsuccessfulLogin_Should()
+        {
+            Logger.LogInformation("Navigating to login page...");
+            await _loginPage.NavigateAsync(ConfigurationHelper.BaseUrl);
+
+            Logger.LogInformation($"Logging in with {ConfigurationHelper.UserName} and incorrect password...");
+            await _loginPage.Login(ConfigurationHelper.UserName, "IncorrectPassword");
+
+            Logger.LogInformation("Waiting for inventory list to be visible...");
+            await Assertions.Expect(_productsPage.InventoryList).ToBeVisibleAsync();
+
+            Logger.LogInformation("Verifying user is navigated to the products page...");
+            var expectedUrl = $"{ConfigurationHelper.BaseUrl}/inventory.html";
+            Assert.That(_productsPage.CurrentUrl, Is.EqualTo(expectedUrl), "User is not navigated to the products page after login.");
+        }
     }
 }

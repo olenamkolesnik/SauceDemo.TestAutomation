@@ -27,6 +27,11 @@ jobs:
       run: pwsh bin/Debug/net9.0/playwright.ps1 install
 
     - name: Run your tests
+      env:
+        TEST_ENV: dev
+        USERNAME: ${{ secrets.USERNAME }}
+        PASSWORD: ${{ secrets.PASSWORD }}
+        GITHUB_ACTIONS: false
       run: |
           dotnet test --no-build \
             --logger "console;verbosity=normal" \
