@@ -31,7 +31,7 @@ jobs:
         TEST_ENV: dev
         USERNAME: ${{ secrets.USERNAME }}
         PASSWORD: ${{ secrets.PASSWORD }}
-        GITHUB_ACTIONS: false
+        GITHUB_ACTIONS: true
       run: |
           dotnet test --no-build \
             --logger "console;verbosity=normal" \
