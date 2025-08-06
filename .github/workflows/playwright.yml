@@ -30,7 +30,7 @@ jobs:
       env:
         TEST_ENV: dev
         USERNAME: ${{ secrets.USERNAME }}
-        PASSWORD: ${{ secrets.USERPASSWORD }}
+        USERPASSWORD: ${{ secrets.USERPASSWORD }}
         GITHUB_ACTIONS: false
       run: |
           dotnet test --no-build \
