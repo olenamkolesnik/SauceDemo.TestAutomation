@@ -1,7 +1,7 @@
 ﻿using Allure.NUnit.Attributes;
-using Allure.NUnit;
 using Microsoft.Extensions.Logging;
 using SauceDemo.TestAutomation.Config;
+using SauceDemo.TestAutomation.Helpers;
 using SauceDemo.TestAutomation.Hooks;
 
 namespace SauceDemo.TestAutomation.Tests
@@ -34,5 +34,29 @@ namespace SauceDemo.TestAutomation.Tests
             var sorted = productNames.OrderByDescending(d => d).ToList();
             Assert.That(productNames, Is.EqualTo(sorted), "Product names are not sorted in descending alphabetical order.");
         }
+
+        [AllureSuite("Products")]
+        [Test]
+        public async Task ProductsShouldMatchExpectedDataFromJson()
+        {
+            var expectedProducts = TestDataHelper.LoadProducts();          
+
+            Logger.LogInformation("Fetching all product details from UI...");
+            var actualProducts = await _productsPage.GetAllProductDetails();
+
+            Logger.LogInformation("Validating that expected products are present in UI...");
+            foreach (var expected in expectedProducts)
+            {
+                var actual = actualProducts.FirstOrDefault(p => p.Name == expected.Name);
+                Assert.That(actual, Is.Not.Null, $"Expected product '{expected.Name}' not found on UI.");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(actual.Name, Is.EqualTo(expected.Name), $"Name mismatch for '{expected.Name}'");
+                    Assert.That(actual.Price, Is.EqualTo(expected.Price), $"Price mismatch for '{expected.Name}'");
+                    Assert.That(actual.Description, Is.EqualTo(expected.Description), $"Description mismatch for '{expected.Name}'");
+                });
+            }
+        }
+
     }
 }
