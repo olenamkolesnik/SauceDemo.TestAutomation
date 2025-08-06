@@ -1,0 +1,59 @@
+{
+  "uuid": "9daa7128-4cdc-4e7a-b97c-fdbe74c873e1",
+  "historyId": "6eb2c9f51971586d65aebebf879384cf",
+  "testCaseId": "d519612fda5b4e668619e4c53ec12235",
+  "fullName": "SauceDemo.TestAutomation:SauceDemo.TestAutomation.Tests.ProductsTests.ProductsShouldBeSortedAlphabeticallyDescendant()",
+  "labels": [
+    {
+      "name": "thread",
+      "value": "ParallelWorker#1"
+    },
+    {
+      "name": "host",
+      "value": "pkrvmjbmru5nbw0"
+    },
+    {
+      "name": "language",
+      "value": "C#"
+    },
+    {
+      "name": "framework",
+      "value": "NUnit 3"
+    },
+    {
+      "name": "package",
+      "value": "SauceDemo.TestAutomation.Tests"
+    },
+    {
+      "name": "testMethod",
+      "value": "ProductsShouldBeSortedAlphabeticallyDescendant"
+    },
+    {
+      "name": "testClass",
+      "value": "ProductsTests"
+    },
+    {
+      "name": "suite",
+      "value": "Products"
+    },
+    {
+      "name": "tag",
+      "value": "Products"
+    }
+  ],
+  "links": [],
+  "name": "ProductsShouldBeSortedAlphabeticallyDescendant",
+  "status": "passed",
+  "stage": "finished",
+  "steps": [],
+  "attachments": [
+    {
+      "name": "Console Output",
+      "source": "e343e2b2-9b83-4267-a881-ffd5a5cc1ea8-attachment.txt",
+      "type": "text/plain"
+    }
+  ],
+  "parameters": [],
+  "start": 1754517235095,
+  "stop": 1754517238707
+}

@@ -1,0 +1,59 @@
+{
+  "uuid": "a19367b5-2371-4fc7-8ce8-df2d61516e5c",
+  "historyId": "d38c33d6155114dd99fee89fba422686",
+  "testCaseId": "a8815b063d291da79c66115faf830fda",
+  "fullName": "SauceDemo.TestAutomation:SauceDemo.TestAutomation.Tests.LoginTests.SuccessfulLogin_ShouldDisplayProductsPage()",
+  "labels": [
+    {
+      "name": "thread",
+      "value": "ParallelWorker#2"
+    },
+    {
+      "name": "host",
+      "value": "pkrvmjbmru5nbw0"
+    },
+    {
+      "name": "language",
+      "value": "C#"
+    },
+    {
+      "name": "framework",
+      "value": "NUnit 3"
+    },
+    {
+      "name": "package",
+      "value": "SauceDemo.TestAutomation.Tests"
+    },
+    {
+      "name": "testMethod",
+      "value": "SuccessfulLogin_ShouldDisplayProductsPage"
+    },
+    {
+      "name": "testClass",
+      "value": "LoginTests"
+    },
+    {
+      "name": "suite",
+      "value": "Login"
+    },
+    {
+      "name": "tag",
+      "value": "Login"
+    }
+  ],
+  "links": [],
+  "name": "SuccessfulLogin_ShouldDisplayProductsPage",
+  "status": "passed",
+  "stage": "finished",
+  "steps": [],
+  "attachments": [
+    {
+      "name": "Console Output",
+      "source": "f18a506c-068e-4418-b806-e92a095982e5-attachment.txt",
+      "type": "text/plain"
+    }
+  ],
+  "parameters": [],
+  "start": 1754517235095,
+  "stop": 1754517238710
+}
