@@ -30,14 +30,17 @@ jobs:
         TEST_ENV: dev
         USERNAME: ${{ secrets.USERNAME }}
         USERPASSWORD: ${{ secrets.USERPASSWORD }}
-        GITHUB_ACTIONS: false
+        GITHUB_ACTIONS: true
       run: |
           dotnet test --no-build \
             --logger "console;verbosity=normal" \
             -- NUnit.Allure.Configuration.ResultsDirectory=allure-results    
 
-    - name: List allure-results files
-      run: ls -la allure-results
+    - name: List current directory contents
+      run: ls -la
+
+    - name: List allure-results folder (if exists)
+      run: ls -la allure-results || echo "allure-results folder not found"
 
     - name: Upload Allure results as artifact
       uses: actions/upload-artifact@v4
