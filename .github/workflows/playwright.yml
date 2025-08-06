@@ -17,8 +17,7 @@ jobs:
         dotnet-version: 9.0.x
     
     - name: Install Allure commandline
-      run: |
-        sudo npm install -g allure-commandline --unsafe-perm=true
+      run: sudo npm install -g allure-commandline --unsafe-perm=true
     
     - name: Build & Install
       run: dotnet build
@@ -37,6 +36,9 @@ jobs:
             --logger "console;verbosity=normal" \
             -- NUnit.Allure.Configuration.ResultsDirectory=allure-results    
 
+    - name: List allure-results files
+      run: ls -la allure-results
+
     - name: Upload Allure results as artifact
       uses: actions/upload-artifact@v4
       with:
@@ -53,19 +55,17 @@ jobs:
 
     - name: Build test report
       uses: simple-elf/allure-report-action@v1.7
-      if: always()
       with:
         gh_pages: gh-pages
         allure_history: allure-history
-        allure_results: build/allure-results
+        allure_results: allure-results
 
     - name: Publish test report
       uses: peaceiris/actions-gh-pages@v3
-      if: always()
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_branch: gh-pages
-        publish_dir: allure-history
+        publish_dir: allure-report
 
 
  
