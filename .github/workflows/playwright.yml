@@ -36,17 +36,17 @@ jobs:
             --logger "console;verbosity=normal" \
             -- NUnit.Allure.Configuration.ResultsDirectory=allure-results    
 
-    - name: List current directory contents
-      run: ls -la
+    - name: List bin directory contents
+      run: ls -la bin/Debug/net9.0
 
     - name: List allure-results folder (if exists)
-      run: ls -la allure-results || echo "allure-results folder not found"
+      run: ls -la bin/Debug/net9.0/allure-report || echo "allure-results folder not found"
 
     - name: Upload Allure results as artifact
       uses: actions/upload-artifact@v4
       with:
         name: allure-results
-        path: allure-results
+        path: bin/Debug/net9.0/allure-report
 
     - name: Load test report history
       uses: actions/checkout@v3
@@ -61,14 +61,14 @@ jobs:
       with:
         gh_pages: gh-pages
         allure_history: allure-history
-        allure_results: allure-results
+        allure_results: bin/Debug/net9.0/allure-report
 
     - name: Publish test report
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_branch: gh-pages
-        publish_dir: allure-report
+        publish_dir: bin/Debug/net9.0/allure-report
 
 
  
