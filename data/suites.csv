@@ -1,0 +1,5 @@
+"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
+"passed","Wed Aug 06 22:03:23 GMT 2025","Wed Aug 06 22:03:24 GMT 2025","1243","","Products","","ProductsTests","ProductsShouldMatchExpectedDataFromJson","ProductsShouldMatchExpectedDataFromJson",""
+"passed","Wed Aug 06 22:03:23 GMT 2025","Wed Aug 06 22:03:24 GMT 2025","1163","","Login","","LoginTests","UnsuccessfulLogin_ShouldShowErrorMessage","UnsuccessfulLogin_ShouldShowErrorMessage",""
+"passed","Wed Aug 06 22:03:19 GMT 2025","Wed Aug 06 22:03:23 GMT 2025","3656","","Login","","LoginTests","SuccessfulLogin_ShouldDisplayProductsPage","SuccessfulLogin_ShouldDisplayProductsPage",""
+"passed","Wed Aug 06 22:03:19 GMT 2025","Wed Aug 06 22:03:23 GMT 2025","3653","","Products","","ProductsTests","ProductsShouldBeSortedAlphabeticallyDescendant","ProductsShouldBeSortedAlphabeticallyDescendant",""
