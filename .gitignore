@@ -363,3 +363,4 @@ MigrationBackup/
 FodyWeavers.xsd
 /EnvironmentVariables.env
 /.env
+/allure-report
