@@ -64,8 +64,11 @@ jobs:
         publish_branch: gh-pages
         publish_dir: allure-report
 
-    - name: List generated report folder
-      run: ls -la allure-report || echo "allure-report folder not found"
+    - name: Upload screenshots as artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: screenshots
+        path: bin/Debug/net9.0/TestResults
 
 
  
