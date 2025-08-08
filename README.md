@@ -1,6 +1,6 @@
 # 🧪 SauceDemo Test Automation Framework
 
-![GitHub Workflow Status](https://github.com/olenamkolesnik/SauceDemo.TestAutomation/actions/workflows/playwright.yml/badge.svg)
+[![GitHub Workflow Status](https://github.com/olenamkolesnik/SauceDemo.TestAutomation/actions/workflows/playwright.yml/badge.svg)](https://github.com/olenamkolesnik/SauceDemo.TestAutomation/actions/workflows/playwright.yml)
 [![Allure Report](https://img.shields.io/badge/Allure-Report-ff69b4)](https://olenamkolesnik.github.io/SauceDemo.TestAutomation/)
 
 End-to-end test automation framework powered by **.NET 9 + Playwright + NUnit + Allure**, integrated with GitHub Actions and GitHub Pages.

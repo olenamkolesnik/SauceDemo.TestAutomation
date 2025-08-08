@@ -44,7 +44,7 @@ namespace SauceDemo.TestAutomation.Tests
 
         [AllureSuite("Login")]
         [Test]
-        //[Ignore("This test is currently ignored as it was created to demonstrate snapshot on fail functionality.")]
+        [Ignore("This test is currently ignored as it was created to demonstrate snapshot on fail functionality.")]
         public async Task UnsuccessfulLogin_Should()
         {
             Logger.LogInformation("Navigating to login page...");
