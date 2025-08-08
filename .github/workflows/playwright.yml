@@ -37,20 +37,22 @@ jobs:
             -- NUnit.Allure.Configuration.ResultsDirectory=allure-results    
 
     - name: Upload Allure results as artifact
+      if: always()
       uses: actions/upload-artifact@v4
       with:
         name: allure-results
         path: bin/Debug/net9.0/allure-results
 
     - name: Load test report history
-      uses: actions/checkout@v3
       if: always()
+      uses: actions/checkout@v3
       continue-on-error: true
       with:
         ref: gh-pages
         path: gh-pages
 
     - name: Build test report
+      if: always()
       uses: simple-elf/allure-report-action@v1.7
       with:
         gh_pages: gh-pages
@@ -58,6 +60,7 @@ jobs:
         allure_results: bin/Debug/net9.0/allure-results
 
     - name: Publish test report
+      if: always()
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -65,6 +68,7 @@ jobs:
         publish_dir: allure-report
 
     - name: Upload screenshots as artifact
+      if: always()
       uses: actions/upload-artifact@v4
       with:
         name: screenshots
