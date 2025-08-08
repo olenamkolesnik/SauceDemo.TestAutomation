@@ -1,7 +1,9 @@
 ﻿using Allure.Commons;
+using Allure.Net.Commons;
 using Allure.NUnit;
 using Microsoft.Extensions.Logging;
 using Microsoft.Playwright;
+using NUnit.Framework.Interfaces;
 using SauceDemo.TestAutomation.Config;
 using SauceDemo.TestAutomation.Helpers;
 using SauceDemo.TestAutomation.Pages;
@@ -70,26 +72,33 @@ namespace SauceDemo.TestAutomation.Hooks
         public async Task TearDown()
         {
             var outcome = TestContext.CurrentContext.Result.Outcome.Status;
-
-            if (outcome == NUnit.Framework.Interfaces.TestStatus.Failed)
+            if (outcome == TestStatus.Failed)
             {
                 var testName = TestContext.CurrentContext.Test.Name;
-                var screenshotPath = Path.Combine("TestResults", $"{testName}.png");
+                var baseDir = AppContext.BaseDirectory;
+                var screenshotsDir = Path.Combine(baseDir, "screenshots");
+                Directory.CreateDirectory(screenshotsDir);
 
-                // Ensure directory exists  
-                Directory.CreateDirectory("TestResults");
+                var fileName = $"{testName}_{DateTime.UtcNow:yyyyMMdd_HHmmss}.png";
+                var screenshotPath = Path.Combine(screenshotsDir, fileName);
 
-                await _testContext.Page.ScreenshotAsync(new PageScreenshotOptions
+                // Capture screenshot and write to disk (Playwright returns bytes)
+                var bytes = await _testContext.Page.ScreenshotAsync(new PageScreenshotOptions
                 {
                     Path = screenshotPath,
                     FullPage = true
                 });
 
-                Logger.LogInformation($"Screenshot saved at path: {screenshotPath}");
+                // Defensive: if Playwright didn't return bytes for some reason, read file
+                if (bytes == null || bytes.Length == 0)
+                {
+                    bytes = File.ReadAllBytes(screenshotPath);
+                }
 
-                // Attach screenshot to Allure report  
-                var lifecycle = AllureLifecycle.Instance;
-                lifecycle.AddAttachment(testName, "image/png", screenshotPath);
+                // Attach screenshot bytes to Allure
+                AllureApi.AddAttachment("Failure Screenshot", "image/png", bytes, "png");
+
+                Logger.LogInformation($"Screenshot saved at: {screenshotPath}");
             }
 
             await _testContext.Page.CloseAsync();
